@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { theme } from "./colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [working, setWorking] = useState(true);
@@ -29,7 +30,7 @@ export default function App() {
     // });
     const newToDos = {
       ...toDos,
-      [Date.now()]: { text, work: working },
+      [Date.now()]: { text, working },
     };
     setToDos(newToDos);
     setText("");
@@ -67,11 +68,20 @@ export default function App() {
         style={styles.input}
       />
       <ScrollView>
-        {Object.keys(toDos).map((key) => (
-          <View style={styles.toDo} key={key}>
-            <Text style={styles.toDoText}>{toDos[key].text}</Text>
-          </View>
-        ))}
+        {Object.keys(toDos).map((key) =>
+          /*
+          work를 클릭하면 working이 true가 되고
+          travel을 클릭하면 working이 false가 됨.
+           이때 toDos에 저장될 때도 work에 쓴 애는 working이 true로
+          travel에 쓴 애는 working이 false로 저장됨.
+           따라서 둘이 같은지 확인하면 됨
+          */
+          toDos[key].working === working ? (
+            <View style={styles.toDo} key={key}>
+              <Text style={styles.toDoText}>{toDos[key].text}</Text>
+            </View>
+          ) : null
+        )}
       </ScrollView>
     </View>
   );
