@@ -29,6 +29,7 @@ export default function App() {
   const saveToDos = async (toSave) => {
     // 현재 있는 toDos를 string으로 바꾸고
     // AsyncStorage에 저장
+    // await 사용 ? 휴대폰 디스크에 접근하므로 에러발생 가능 있음
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
   };
   // const loadToDos = async () => {
