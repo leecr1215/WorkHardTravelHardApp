@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { theme } from "./colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Fontisto } from "@expo/vector-icons";
 
 const STORAGE_KEY = "@toDos";
 
@@ -28,13 +31,18 @@ export default function App() {
     // AsyncStorage에 저장
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
   };
+  // const loadToDos = async () => {
+  //   try {
+  //     const s = await AsyncStorage.getItem(STORAGE_KEY);
+  //     setToDos(JSON.parse(s));
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
   const loadToDos = async () => {
-    try {
-      const s = await AsyncStorage.getItem(STORAGE_KEY);
-      setToDos(JSON.parse(s));
-    } catch (e) {
-      alert(e);
-    }
+    const s = await AsyncStorage.getItem(STORAGE_KEY);
+    console.log(s);
+    s !== null ? setToDos(JSON.parse(s)) : null;
   };
 
   const addToDo = async () => {
@@ -55,7 +63,20 @@ export default function App() {
     await saveToDos(newToDos);
     setText("");
   };
-  console.log(toDos);
+  const deleteToDo = async (key) => {
+    Alert.alert("Delete To Do", "Are you sure?", [
+      { text: "Cancel" },
+      {
+        text: "I'm Sure",
+        onPress: async () => {
+          const newToDos = { ...toDos };
+          delete newToDos[key];
+          setToDos(newToDos);
+          await saveToDos(newToDos);
+        },
+      },
+    ]);
+  };
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
@@ -99,6 +120,15 @@ export default function App() {
           toDos[key].working === working ? (
             <View style={styles.toDo} key={key}>
               <Text style={styles.toDoText}>{toDos[key].text}</Text>
+              <TouchableOpacity onPress={() => deleteToDo(key)}>
+                <Text>
+                  <Fontisto
+                    name="trash"
+                    size={18}
+                    color={theme.grey}
+                  ></Fontisto>
+                </Text>
+              </TouchableOpacity>
             </View>
           ) : null
         )}
@@ -136,6 +166,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   toDoText: {
     color: "white",
