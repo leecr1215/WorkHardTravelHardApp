@@ -2,7 +2,7 @@
 
 ## 📎 Expo Link
 
-If you click link down below, then the app becomes usable!!  
+If you click a link down below, then the app becomes usable!!  
 Before the link is cliked, the app 'Expo Go' should be downloaded.  
 [Go WHTH App](https://expo.dev/@chelim/whthapp)
 
