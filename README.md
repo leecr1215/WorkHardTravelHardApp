@@ -23,3 +23,8 @@ Before the link is cliked, the app 'Expo Go' should be downloaded.
 3. Delete todos  
    <img width="200" alt="icon" src="https://user-images.githubusercontent.com/52441923/152635923-9b86441f-2fbe-4890-b4e1-f24eda6eddde.png">
    <img width="200" alt="icon" src="https://user-images.githubusercontent.com/52441923/152635937-c25efc40-9142-496b-8de9-6a338f9842db.png">
+
+## 🖱 Blog
+
+If you want to know what knowledge you need to build this app, please visit my blog 😉  
+[Chelim's blog](https://chelim.tistory.com/25)
